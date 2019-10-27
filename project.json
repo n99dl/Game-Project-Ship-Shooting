@@ -16,6 +16,7 @@
     ],
     "jsList": [
         "src/Config.js",
+        "src/Enemy.js",
         "src/MainGame.js",
         "src/MainMenu.js",
         "src/Resources.js",

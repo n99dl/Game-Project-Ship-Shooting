@@ -6,3 +6,5 @@ var GV = GV || {};
 
 GV.menuHeight = 36;
 GV.menuWidth = 123;
+
+GV.KEYPRESSED = [];
