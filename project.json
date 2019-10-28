@@ -15,6 +15,7 @@
         "src/**/*.js"
     ],
     "jsList": [
+        "src/Bullet.js",
         "src/Config.js",
         "src/Enemy.js",
         "src/MainGame.js",
