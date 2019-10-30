@@ -18,6 +18,7 @@
         "src/Bullet.js",
         "src/Config.js",
         "src/Enemy.js",
+        "src/Hitbox.js",
         "src/MainGame.js",
         "src/MainMenu.js",
         "src/Resources.js",

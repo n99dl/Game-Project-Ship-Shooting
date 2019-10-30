@@ -6,7 +6,7 @@ var MainGame = cc.Layer.extend({
     _transparentTexture : null,
     _ship : null,
     _enemy : null,
-    enemyRate: 4,
+    enemyRate: 3,
     ctor: function () {
         this._super();
         this.init();
@@ -28,26 +28,46 @@ var MainGame = cc.Layer.extend({
         this.addChild(this._textureOpaquePack);
         this.scheduleUpdate();
         cc.log(this.enemyRate);
+        //this.createEnemy();
         this.schedule(this.createEnemy,this.enemyRate);
-        this.schedule(this.increaseDiff,10);
+        //this.scheduleUpdateReceiver()
+        //this.schedule(this.increaseDiff,10);
         //this.createEnemy();
     },
     update: function (dt) {
         var i, objectList;
         objectList = this._transparentTexture.children;
         for (i in objectList){
-            if (objectList[i])
+            if (objectList[i].active)
             objectList[i].update(dt);
         }
         objectList = this._textureOpaquePack.children;
         for (i in objectList){
+            if (objectList[i].active)
             objectList[i].update(dt);
+        }
+        this.checkCollide();
+    },
+    checkCollide: function () {
+        var i, j, oList1, oList2, a, b;
+        oList1 = GV.ENEMIES;
+        for (i in oList1){
+            a = oList1[i];
+            b = this._ship;
+            this.collide(a, b);
+            oList2 = GV.P_BULLETS;
+            for (j in oList2){
+                b = oList2[j];
+                this.collide(a, b);
+            }
         }
     },
     createEnemy: function () {
         cc.log("create enemy");
-        //this._enemy = new Enemy(this);
-        this._transparentTexture.addChild(new Enemy(this));
+        var type = Math.floor(Math.random() * 2 );
+        var newEnemy = new Enemy(this, type);
+        GV.ENEMIES.push(newEnemy);
+        this._transparentTexture.addChild(newEnemy);
     },
     addController: function () {
         if ('keyboard' in sys.capabilities){
@@ -67,5 +87,18 @@ var MainGame = cc.Layer.extend({
     increaseDiff: function () {
         this.enemyRate = Math.max(2.5, this.enemyRate - 0.5);
         cc.log(this.enemyRate);
+    },
+    collide: function (a, b) {
+        if (!a.active || !b.active)
+            return false;
+        var aHitbox = a.getHitbox();
+        var bHitbox = b.getHitbox();
+        //temp = a.getHitbox();
+        if (cc.rectIntersectsRect(aHitbox, bHitbox)){
+            a.damage();
+            b.damage();
+            return true;
+        }
+        return false;
     }
 });

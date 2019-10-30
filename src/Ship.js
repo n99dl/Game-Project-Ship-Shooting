@@ -2,11 +2,12 @@
  * Created by CPU60079_LOCAL on 10/25/2019.
  */
 var Ship = cc.Sprite.extend({
-    moveSpeed : 200,
+    moveSpeed : 240,
     bulletRate: 1/25,
     appearPosition: cc.p(200,200),
     _gameLayer: null,
     timer: 0,
+    active: true,
     ctor: function (gamelayer) {
         this._super("#ship01.png");
         this._gameLayer = gamelayer;
@@ -15,6 +16,10 @@ var Ship = cc.Sprite.extend({
     init: function () {
         this.setPosition(this.appearPosition);
         //this.schedule(this.shoot(), 0.1);
+    },
+    destroy: function () {
+        this.active = false;
+        this.visible = false;
     },
     update: function (dt) {
         var dx = 0, dy = 0;
@@ -58,5 +63,13 @@ var Ship = cc.Sprite.extend({
         this.x = Math.min(this.x, cc.director.getWinSize().width);
         this.y = Math.max(this.y, 0);
         this.y = Math.min(this.y, cc.director.getWinSize().height);
+    },
+    getHitbox: function () {
+        var w = this.width, h = this.height;
+        var a = this.x - w / 2, b = this.y - h / 4, c = this.x + w / 2, d = this.y + h / 4;
+        return cc.rect(a, b, c - a, d - b);
+    },
+    damage: function () {
+        cc.log("Ship damage");
     }
 })

@@ -8,3 +8,7 @@ GV.menuHeight = 36;
 GV.menuWidth = 123;
 
 GV.KEYPRESSED = [];
+
+GV.E_BULLETS = [];
+GV.P_BULLETS = [];
+GV.ENEMIES = [];
