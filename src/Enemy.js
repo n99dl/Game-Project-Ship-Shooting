@@ -6,25 +6,28 @@ var Enemy = cc.Sprite.extend({
     timer: 0,
     bulletRate: 1/80,
     _type: null,
+    hp: 2,
     ctor: function (gameLayer, type) {
         this._gameLayer = gameLayer;
         this._type = type;
-        if (type == 1){
+        if (this._type == 1){
             this._super("#E1.png");
             this.setRotation(180);
         } else{
-            this._super("E2.png");
+            this._super("#E2.png");
             this.moveSpeed = 50;
+            this.hp = 3;
         }
         this.init();
     },
     init: function () {
         var winSize = cc.director.getWinSize();
-        if (this.type == 1) {
+        if (this._type == 1) {
             this.x = winSize.width / 2;
             this.y = winSize.height;
         } else{
             this.x = Math.floor(Math.random() * winSize.width);
+            //cc.log(this.x +" " + winSize.width);
             this.y = winSize.height;
         }
         //cc.log("initiated");
@@ -35,7 +38,7 @@ var Enemy = cc.Sprite.extend({
     },
     update: function (dt) {
         var winSize = cc.director.getWinSize();
-        if (this.type == 1) {
+        if (this._type == 1) {
             this.x += this.moveSpeed * dt * this.direction;
             //cc.log(this.moveSpeed * dt * this.direction);
             if (this.x < 0) {
@@ -72,6 +75,7 @@ var Enemy = cc.Sprite.extend({
         cc.log("Enemy damage");
         cc.log(this.width/2);
         cc.log(this.height/2);
+        if (!(--this.hp))
         this.destroy();
     }
 })

@@ -63,8 +63,8 @@ var MainGame = cc.Layer.extend({
         }
     },
     createEnemy: function () {
-        cc.log("create enemy");
-        var type = Math.floor(Math.random() * 2 );
+        var type = 1 + Math.floor(Math.random() * 2 );
+        cc.log("create enemy " + type);
         var newEnemy = new Enemy(this, type);
         GV.ENEMIES.push(newEnemy);
         this._transparentTexture.addChild(newEnemy);
