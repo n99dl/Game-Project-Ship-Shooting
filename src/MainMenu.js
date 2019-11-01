@@ -37,7 +37,7 @@ var MainMenu = cc.Layer.extend({
 
     },
     startGame: function () {
-        var newScene = cc.Scene();
+        var newScene = new cc.Scene();
         newScene.addChild(new MainGame());
         cc.director.runScene(newScene);
     }

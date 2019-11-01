@@ -53,3 +53,15 @@ createBullet = function (owner, batch, type) {
     }
     batch.addChild(newBullet);
 }
+
+createBulletAt = function (x, y, batch, type) {
+    var cloneShip = new cc.Sprite();
+    cloneShip.setPosition(cc.p(x,y));
+    var newBullet = new Bullet(cloneShip, type);
+    if (type == "ship"){
+        GV.P_BULLETS.push(newBullet);
+    } else{
+        GV.E_BULLETS.push(newBullet);
+    }
+    batch.addChild(newBullet);
+}

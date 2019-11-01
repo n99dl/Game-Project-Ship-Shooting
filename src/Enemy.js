@@ -4,7 +4,7 @@ var Enemy = cc.Sprite.extend({
     direction : -1,
     active: true,
     timer: 0,
-    bulletRate: 1/80,
+    bulletRate: 80,
     _type: null,
     hp: 2,
     ctor: function (gameLayer, type) {
@@ -13,11 +13,12 @@ var Enemy = cc.Sprite.extend({
         if (this._type == 1){
             this._super("#E1.png");
             this.setRotation(180);
-        } else{
+        } else {
             this._super("#E2.png");
             this.moveSpeed = 50;
             this.hp = 3;
         }
+        this.hp += GV.EADD_HP;
         this.init();
     },
     init: function () {
@@ -35,6 +36,7 @@ var Enemy = cc.Sprite.extend({
     destroy: function () {
         this.active = false;
         this.visible = false;
+        GV.SCORE += this._type * 500;
     },
     update: function (dt) {
         var winSize = cc.director.getWinSize();
@@ -57,7 +59,7 @@ var Enemy = cc.Sprite.extend({
             this.destroy();
         }
 
-        if (this.timer % (1 / this.bulletRate) == 0)
+        if (this.timer % this.bulletRate == 0)
         createBullet(this,this._gameLayer._textureOpaquePack,"enemy");
 
         this.timer ++;
