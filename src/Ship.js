@@ -59,9 +59,9 @@ var Ship = cc.Sprite.extend({
         //cc.log("shoot");
         //createBullet(this, this._gameLayer._textureOpaquePack,"ship");
         if (GV.SCORE >= 5000)
-            createBullet(this, this._gameLayer._textureOpaquePack,"ship");
-        createBulletAt(this.x - 25, this.y, this._gameLayer._textureOpaquePack,"ship");
-        createBulletAt(this.x + 25, this.y, this._gameLayer._textureOpaquePack,"ship");
+            createBullet(this, this._gameLayer,"ship");
+        createBulletAt(this.x - 25, this.y, this._gameLayer,"ship");
+        createBulletAt(this.x + 25, this.y, this._gameLayer,"ship");
     },
     rePositioning: function () {
         this.x = Math.max(this.x, 0);

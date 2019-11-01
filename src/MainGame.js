@@ -2,6 +2,7 @@
  * Created by CPU60079_LOCAL on 10/25/2019.
  */
 var MainGame = cc.Layer.extend({
+    _explosion: null,
     _textureOpaquePack : null,
     _transparentTexture : null,
     _scoreLabel: null,
@@ -22,18 +23,22 @@ var MainGame = cc.Layer.extend({
         GV.E_BULLETS = [];
         GV.P_BULLETS = [];
         GV.ENEMIES = [];
+        GV.HIT_EFFECT = [];
         cc.log("into game");
         //Init Spite frame cache
         cc.spriteFrameCache.addSpriteFrames(res.textureTransparentPack_plist);
         cc.spriteFrameCache.addSpriteFrames(res.textureOpaquePack_plist);
+        cc.spriteFrameCache.addSpriteFrames(res.explosion_plist);
         //Add controller
         this.addController();
         //Add Sprite sheet
         var textureOpaquePack = cc.textureCache.addImage(res.textureOpaquePack_png);
         var transparentTexture = cc.textureCache.addImage(res.textureTransparentPack_png);
+        var explosion = cc.textureCache.addImage(res.explosion_png);
         //Batch Sprite sheet to reduce GL Call
         this._transparentTexture = new cc.SpriteBatchNode(transparentTexture);
         this._textureOpaquePack = new cc.SpriteBatchNode(textureOpaquePack);
+        this._explosion = new cc.SpriteBatchNode(explosion);
         //Create new ship
         this._ship = new Ship(this);
         cc.log("add Ship");
@@ -43,6 +48,7 @@ var MainGame = cc.Layer.extend({
         //Add batch to main game
         this.addChild(this._transparentTexture, 2);
         this.addChild(this._textureOpaquePack, 3);
+        this.addChild(this._explosion, 4);
         //Add Score Label
         //this._scoreLabel = new cc.LabelBMFont("Score: " + GV.SCORE,res.arial_14_fnt);
         this._scoreLabel = new cc.LabelTTF("Score: " + GV.SCORE,"Arial",20);

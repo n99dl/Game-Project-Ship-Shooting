@@ -5,19 +5,27 @@ var Bullet = cc.Sprite.extend({
     speed: 1000,
     direction: 1,
     active: true,
-    ctor: function (owner, type) {
+    _gamelayer: null,
+    ctor: function (owner, gamelayer, type) {
         if (type == "ship"){
             this._super("#W1.png");
-        } else{
+        } else {
             this._super("#W2.png");
             this.direction = -1;
             this.speed = 300;
         }
+        this._gamelayer = gamelayer;
+        this.init(owner, type);
+    },
+    init: function (owner) {
+        this.active = true;
+        this.visible = true;
         this.setPosition(owner.getPosition());
     },
     destroy: function () {
         this.active = false;
         this.visible = false;
+        createHitEffect(this.getPosition(), this._gamelayer);
     },
     update: function (dt) {
         this.y += dt * this.speed * this.direction;
@@ -44,24 +52,45 @@ var Bullet = cc.Sprite.extend({
     }
 })
 
-createBullet = function (owner, batch, type) {
-    var newBullet = new Bullet(owner, type);
+
+createBullet = function (owner, gamelayer, type) {
+    var newBullet;
     if (type == "ship"){
+        var i,o;
+        for (i in GV.P_BULLETS){
+            o = GV.P_BULLETS[i];
+            if (!o.active){
+                o.init(owner);
+                return o;
+            }
+        }
+        newBullet = new Bullet(owner, gamelayer, type);
         GV.P_BULLETS.push(newBullet);
     } else{
+        var i,o;
+        for (i in GV.E_BULLETS){
+            o = GV.E_BULLETS[i];
+            if (!o.active){
+                o.init(owner);
+                return o;
+            }
+        }
+        newBullet = new Bullet(owner, gamelayer, type);
         GV.E_BULLETS.push(newBullet);
     }
-    batch.addChild(newBullet);
+    gamelayer._textureOpaquePack.addChild(newBullet);
+    return newBullet;
 }
 
-createBulletAt = function (x, y, batch, type) {
+createBulletAt = function (x, y, gamelayer, type) {
     var cloneShip = new cc.Sprite();
     cloneShip.setPosition(cc.p(x,y));
-    var newBullet = new Bullet(cloneShip, type);
-    if (type == "ship"){
-        GV.P_BULLETS.push(newBullet);
-    } else{
-        GV.E_BULLETS.push(newBullet);
-    }
-    batch.addChild(newBullet);
+    //var newBullet = new Bullet(cloneShip, type);
+    //if (type == "ship"){
+    //    GV.P_BULLETS.push(newBullet);
+    //} else{
+    //    GV.E_BULLETS.push(newBullet);
+    //}
+    //batch.addChild(newBullet);
+    createBullet(cloneShip, gamelayer, type);
 }

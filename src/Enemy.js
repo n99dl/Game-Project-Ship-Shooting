@@ -60,7 +60,7 @@ var Enemy = cc.Sprite.extend({
         }
 
         if (this.timer % this.bulletRate == 0)
-        createBullet(this,this._gameLayer._textureOpaquePack,"enemy");
+        createBullet(this,this._gameLayer,"enemy");
 
         this.timer ++;
     },

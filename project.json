@@ -20,6 +20,7 @@
         "src/Enemy.js",
         "src/GameOver.js",
         "src/Hitbox.js",
+        "src/HitEffect.js",
         "src/MainGame.js",
         "src/MainMenu.js",
         "src/Resources.js",

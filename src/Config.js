@@ -12,6 +12,7 @@ GV.KEYPRESSED = [];
 GV.E_BULLETS = [];
 GV.P_BULLETS = [];
 GV.ENEMIES = [];
+GV.HIT_EFFECT = [];
 
 
 GV.SCORE = 0;
